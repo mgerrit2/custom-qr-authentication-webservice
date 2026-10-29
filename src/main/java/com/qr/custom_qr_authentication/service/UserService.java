@@ -1,6 +1,5 @@
 package com.qr.custom_qr_authentication.service;
 
-
 import com.qr.custom_qr_authentication.dto.user.UserDTO;
 import com.qr.custom_qr_authentication.dto.user.UserFilterDTO;
 import com.qr.custom_qr_authentication.dto.user.UserResponceDTO;
@@ -12,7 +11,6 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
