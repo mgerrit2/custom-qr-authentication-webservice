@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -160,14 +161,14 @@ public class TwoFactorController {
 
         // SECURITY FIX: Identificeer de gebruiker op basis van de actieve sessie (Principal),
         // niet op basis van een ID die vanuit de frontend meegestuurd wordt.
-        /*
+
         if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Niet ingelogd.");
         }
-*/
-        /*
 
-        var findUser = userSv.getUserByUsername(principal.getName());
+
+
+        var findUser = dataRs.getUserByUsername(principal.getName());
         if (findUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Gebruiker niet gevonden.");
         }
@@ -202,7 +203,7 @@ public class TwoFactorController {
 
             return ResponseEntity.ok(Collections.singletonMap("status", "2FA succesvol geverifieerd"));
         }
-*/
+
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ongeldige code. Probeer het opnieuw.");
     }
 
