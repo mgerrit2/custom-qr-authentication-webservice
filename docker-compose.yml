@@ -1,0 +1,20 @@
+services:
+  custom-qr-authentication-webservice:
+    build:
+      context: .
+      dockerfile: dockerfile
+    env_file:
+      - /home/mgerrit2/dev-ubuntu/software-projects-ubuntu/.env
+    ports:
+      - "8080:8080"  # Changed to expose 8080 to the host if needed
+      - "5005:5005"   # De debugger
+    extra_hosts:
+          - "host.docker.internal:host-gateway"
+    environment:
+      - SERVER_PORT=8080
+
+      # in plaats van in de Dockerfile ENTRYPOINT
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    restart: always
+
+
