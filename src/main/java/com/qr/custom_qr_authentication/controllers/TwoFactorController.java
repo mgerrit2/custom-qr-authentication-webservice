@@ -13,6 +13,9 @@ import dev.samstevens.totp.qr.QrGenerator;
 import dev.samstevens.totp.secret.SecretGenerator;
 import dev.samstevens.totp.util.Utils;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +45,7 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/{version}/2fa")
 @Tag(name= "Twofactor check")
+@Schema(description = "Response payload voor 2FA setup")
 public class TwoFactorController {
 
     private final SecretGenerator secretGenerator;
@@ -64,7 +69,7 @@ public class TwoFactorController {
      * @return A ResponseEntity containing the generated base64 QR code image data URI, or an error status.
      * @throws QrGenerationException if an error occurs during QR code creation.
      */
-    @Operation(summary = "Setup the 2 way authentication", responses = {
+    @Operation(summary = "Setup the 2 way authentication, and generate QR", responses = {
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(
                             schema = @Schema(implementation = Object.class)
@@ -80,8 +85,17 @@ public class TwoFactorController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @ApiResponse(responseCode = "default")
     })
-    @GetMapping("/setup")
-    public ResponseEntity<Object> setupDevice(Principal principal) throws QrGenerationException {
+    @GetMapping(
+            value = "/setup", produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Object> setupDevice(Principal principal,
+                                              @Parameter(name = "version",
+                                                         description = "API version (bijv. 1.0)",
+                                                         in = ParameterIn.PATH, required = true,
+                                                         schema = @Schema(type = "string",
+                                                         defaultValue = "1.0"))
+                                              @PathVariable("version") String version
+                                              ) throws QrGenerationException {
 
         // 1. Secure: Identificeer gebruiker via Spring Security sessie/JWT
         if (principal == null) {
@@ -175,7 +189,16 @@ public class TwoFactorController {
             )
     })
     @PostMapping("/verify")
-    public ResponseEntity<Object> verify(Principal principal,@RequestBody VerifyRequest request) {
+    public ResponseEntity<Object> verify(
+            Principal principal,
+            @RequestBody VerifyRequest request,
+            @Parameter(name = "version",
+                  description = "API version (bijv. 1.0)",
+                  in = ParameterIn.PATH, required = true,
+                  schema = @Schema(type = "string",
+                          defaultValue = "1.0"))
+            @PathVariable("version") String version
+    ) {
 
         // SECURITY FIX: Identificeer de gebruiker op basis van de actieve sessie (Principal),
         // niet op basis van een ID die vanuit de frontend meegestuurd wordt.
