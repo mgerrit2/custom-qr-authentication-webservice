@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+@SuppressWarnings("java:S4502")
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable) // CSRF protections should not be disabled is save
                 .authorizeHttpRequests(auth -> auth
                         // Allow public access to Swagger UI and OpenAPI documentation
                         .requestMatchers(
