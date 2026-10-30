@@ -6,11 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-
 import java.time.OffsetDateTime;
-import java.util.Objects;
-import java.util.Optional;
 
 //@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
