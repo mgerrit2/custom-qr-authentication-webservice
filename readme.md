@@ -28,3 +28,6 @@
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.13.0'
 ```
 
+## Swagger
+### URL swagger
+http://localhost:8092/swagger-ui/index.html
