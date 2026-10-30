@@ -37,6 +37,9 @@ WORKDIR /application
 # Copy compiled JAR from Stage 1 (builder) into Stage 2
 COPY --chown=spring:spring --from=builder /application/app.jar ./app.jar
 
+# Define default active Spring Profile (can be overridden at runtime)
+ENV SPRING_PROFILES_ACTIVE=render
+
 # Java 25 High-Performance Flags:
 # - TieredStopAtLevel=1: Fastest JIT startup for containers
 # - Virtual Threads: Enabled for Java 25 performance
