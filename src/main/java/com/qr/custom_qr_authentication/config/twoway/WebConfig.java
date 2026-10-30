@@ -33,6 +33,9 @@ public class WebConfig implements WebMvcConfigurer {
 
         // Use allowedOriginPatterns instead of allowedOrigins when using allowCredentials(true)
         configuration.setAllowedOriginPatterns(List.of(
+                "http://172.22.133.5:8092",
+                "https://172.22.133.5:8092",
+                "http://localhost:8092",
                 "http://localhost:4200",
                 "https://msal-angular-sample.onrender.com",
                 "https://msal-angular-sample-webservice.onrender.com"
