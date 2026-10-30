@@ -1,5 +1,6 @@
 package com.qr.custom_qr_authentication.controllers;
 
+import com.qr.custom_qr_authentication.dto.TwoFactorSetupResponseDto;
 import com.qr.custom_qr_authentication.dto.VerifyRequest;
 import com.qr.custom_qr_authentication.entity.UserEntity;
 import com.qr.custom_qr_authentication.mappers.UserMapper;
@@ -14,7 +15,6 @@ import dev.samstevens.totp.secret.SecretGenerator;
 import dev.samstevens.totp.util.Utils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -72,7 +72,7 @@ public class TwoFactorController {
     @Operation(summary = "Setup the 2 way authentication, and generate QR", responses = {
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(
-                            schema = @Schema(implementation = Object.class)
+                            schema = @Schema(implementation = TwoFactorSetupResponseDto.class)
                     )
             ),
             @ApiResponse(responseCode = "400", description = "Bad Request, missing required fields."),
@@ -142,8 +142,10 @@ public class TwoFactorController {
                 qrGenerator.getImageMimeType()
         );
 
-        // Retourneert exact ResponseEntity<Object>
-        return ResponseEntity.ok(Collections.singletonMap("qrCode", qrCodeUri));
+        TwoFactorSetupResponseDto responseDto = new TwoFactorSetupResponseDto();
+        responseDto.setQrCode(qrCodeUri);
+
+        return ResponseEntity.ok(responseDto);
     }
 
     /**

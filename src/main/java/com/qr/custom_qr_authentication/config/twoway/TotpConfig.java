@@ -12,8 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * this is needed to let the libray 'dev.samstevens.totp:totp-spring-boot-starter:1.7.1' works
- * Expect principal
+ * Configuratieklasse voor Two-Factor Authentication (TOTP).
+ * Initialiseert de benodigde beans voor de 'dev.samstevens.totp' bibliotheek,
+ * zoals secret generatie, QR-code generatie en code verificatie.
  */
 @Configuration
 public class TotpConfig {
