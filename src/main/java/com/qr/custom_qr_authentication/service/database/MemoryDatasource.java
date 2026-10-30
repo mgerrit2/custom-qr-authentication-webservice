@@ -17,7 +17,7 @@ public class MemoryDatasource implements IDatasource {
     @Override
     public Optional<UserEntity> getUserByUsername(String name) {
         if (name == null || users == null) {
-            return null;
+            return Optional.empty();
         }
 
         // Find user by username using Java Streams (case-sensitive or insensitive as needed)
