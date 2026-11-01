@@ -247,7 +247,7 @@ public class TwoFactorController {
             return ResponseEntity.ok(Collections.singletonMap("status", "2FA succesvol geverifieerd"));
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ongeldige code. Probeer het opnieuw.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ongeldige code.");
     }
 
 }
