@@ -82,18 +82,6 @@ public class JwtService {
      */
     private SecretKey getSignInKey() {
         byte[] keyBytes =   io.jsonwebtoken.io.Decoders.BASE64.decode(secretKey);
-
-        // --- TEMPORARY DEBUGGING LOG ---
-        var multiString = new StringBuilder();
-
-        multiString.append("DEBUG: Secret Key Base64 String: " + secretKey);
-        multiString.append(System.lineSeparator());
-        multiString.append("DEBUG: Decoded Key Byte Length: " + keyBytes.length);
-        multiString.append(System.lineSeparator());
-        multiString.append("DEBUG: Decoded Key Bytes (Hex): " + bytesToHex(keyBytes));
-
-        log.info(multiString);
-
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
