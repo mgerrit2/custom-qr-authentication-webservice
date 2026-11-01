@@ -35,7 +35,7 @@ repositories {
 }
 
 dependencies {
-	// two way authentication
+	// two way authentication(https://github.com/samdjstevens/java-totp)
 	implementation 'dev.samstevens.totp:totp-spring-boot-starter:1.7.1'
 
 	// MapStruct core
